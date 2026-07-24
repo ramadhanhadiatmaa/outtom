@@ -1,11 +1,7 @@
 extends Node
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# Conto sinyal global untuk MVP
+signal exp_gained(amount: int)
+signal training_completed(activity_id: String)
+signal player_recruited(card_data: Resource)
+signal coach_leveled_up(new_level: int)

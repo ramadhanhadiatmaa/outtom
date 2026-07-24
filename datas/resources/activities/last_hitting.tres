@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CoachActivityData" format=3 uid="uid://c6afxwlft26dt"]
+
+[ext_resource type="Script" uid="uid://b2x7jkcw6b47o" path="res://datas/scripts/coach_activity_data.gd" id="1_5pa2j"]
+
+[resource]
+script = ExtResource("1_5pa2j")
+id = "last_hitting"
+display_name = "Last Hitting"
+description = "Train last hit"
+metadata/_custom_type_script = "uid://b2x7jkcw6b47o"

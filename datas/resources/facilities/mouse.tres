@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FacilityData" format=3 uid="uid://cjs5ld2hr0otj"]
+
+[ext_resource type="Script" uid="uid://cq24atgeqj4ol" path="res://datas/scripts/facility_data.gd" id="1_vrrb6"]
+
+[resource]
+script = ExtResource("1_vrrb6")
+id = "mouse"
+max_level = 100
+metadata/_custom_type_script = "uid://cq24atgeqj4ol"

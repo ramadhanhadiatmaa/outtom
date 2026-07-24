@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerCardData" format=3 uid="uid://ibppeh3rcri3"]
+
+[ext_resource type="Script" uid="uid://bs5kuo4aap2dr" path="res://datas/scripts/player_card_data.gd" id="1_ew3gp"]
+
+[resource]
+script = ExtResource("1_ew3gp")
+id = "aqua"
+player_name = "Aqua"
+playstyle = 0
+mentality = 3
+active_season = 3
+metadata/_custom_type_script = "uid://bs5kuo4aap2dr"
