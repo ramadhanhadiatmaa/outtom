@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://63mdgy4chomq"]
+
+[ext_resource type="Script" uid="uid://boepukl3jepbm" path="res://scenes/components/training_panel.gd" id="1_75y71"]
+
+[node name="TrainingPanel" type="Control" unique_id=732797386 node_paths=PackedStringArray("title_label", "level_label", "exp_progress", "start_button", "stop_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_75y71")
+title_label = NodePath("MarginContainer/VBoxContainer/TitleLabel")
+level_label = NodePath("MarginContainer/VBoxContainer/LevelLabel")
+exp_progress = NodePath("MarginContainer/VBoxContainer/ExpProgressBar")
+start_button = NodePath("MarginContainer/VBoxContainer/ButtonContainer/StartButton")
+stop_button = NodePath("MarginContainer/VBoxContainer/ButtonContainer/StopButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1225712455]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=39135553]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1656692065]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=616449900]
+layout_mode = 2
+
+[node name="ExpProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=2037076679]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+show_percentage = false
+
+[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1570811988]
+layout_mode = 2
+alignment = 1
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonContainer" unique_id=8357501]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "START"
+
+[node name="StopButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonContainer" unique_id=995091557]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "STOP"

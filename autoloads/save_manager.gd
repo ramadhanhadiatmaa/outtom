@@ -22,10 +22,12 @@ func save_game() -> void:
 
 func load_game() -> void:
 	if ResourceLoader.exists(SAVE_PATH):
-		current_save = ResourceLoader.load(SAVE_PATH, "SaveData") as SaveData
-		print("SaveManager: Data berhasil dimuat.")
-	else:
+		current_save = ResourceLoader.load(SAVE_PATH) as SaveData
+	if current_save == null:
+		push_warning("SaveManager: Save file not found or corrupted. Creating a new SaveData instance...")
 		current_save = SaveData.new()
-		current_save.last_offline_timestamp = TimeManager.get_current_unix_time()
+		if TimeManager:
+			current_save.last_offline_timestamp = TimeManager.get_current_unix_time()
 		save_game()
-		print("SaveManager: Save data baru dibuat.")
+	else:
+		print("SaveManager: Save data loaded successfully.")

@@ -20,6 +20,18 @@ class_name SaveData extends Resource
 @export var facility_levels: Dictionary = {}
 @export var activity_levels: Dictionary = {}
 
+@export_category("Active Training State")
+@export var active_activity_id: String = ""
+@export var active_session_elapsed: int = 0
+@export var activity_exp: Dictionary = {}
+
+@export_category("Gacha Pity Trackers")
+@export var pity_epic_counter: int = 0
+@export var pity_legendary_counter: int = 0
+@export var pity_mythic_counter: int = 0
+
+@export_category("Inventory & Economy")
+@export var potential_fragments: int = 0
 
 # ==========================================
 # ENCAPSULATION & DATA HELPERS

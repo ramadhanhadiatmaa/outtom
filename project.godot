@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="outtom"
+run/main_scene="uid://63mdgy4chomq"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
@@ -19,6 +20,9 @@ config/icon="res://icon.svg"
 SignalBus="*uid://b5vgqnhnprwvo"
 TimeManager="*uid://tpufxa4aejew"
 SaveManager="*uid://wjhj0mtl3v26"
+TrainingManager="*uid://durby0ph7ri0a"
+GachaManager="*uid://db6xbmdkuq676"
+InventoryManager="*uid://b5jnecf363nh8"
 
 [display]
 
