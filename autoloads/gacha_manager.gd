@@ -13,6 +13,17 @@ const PITY_MYTHIC: int = 500
 
 const PULL_COST: int = 1
 
+@export_category("Card Database (Pools)")
+@export var pool_common: Array[PlayerCardData] = []
+@export var pool_uncommon: Array[PlayerCardData] = []
+@export var pool_rare: Array[PlayerCardData] = []
+@export var pool_epic: Array[PlayerCardData] = []
+@export var pool_legendary: Array[PlayerCardData] = []
+@export var pool_mythic: Array[PlayerCardData] = []
+
+# ==========================================
+# PUBLIC API
+# ==========================================
 func pull_single() -> void:
 	var save: SaveData = SaveManager.current_save
 
@@ -20,26 +31,40 @@ func pull_single() -> void:
 		SignalBus.gacha_pull_failed.emit("Not enough Scout Tokens.")
 		return
 
-	save.scout_tokens -= PULL_COST
-
 	var rolled_rarity: PlayerCardData.Rarity = _roll_rarity(save)
-	var new_card: PlayerCardData = _generate_card_instance(rolled_rarity)
+	var new_card: PlayerCardData = pull_card_from_pool(rolled_rarity)
 
+	if new_card == null:
+		SignalBus.gacha_pull_failed.emit("System Error: Card pool is empty.")
+		return
+
+	save.scout_tokens -= PULL_COST
 	save.owned_players.append(new_card)
 	SaveManager.save_game()
 	SignalBus.gacha_pull_success.emit(new_card)
 
+func pull_card_from_pool(rarity: PlayerCardData.Rarity) -> PlayerCardData:
+	var selected_pool: Array[PlayerCardData] = _get_pool_by_rarity(rarity)
+
+	if selected_pool.is_empty():
+		push_error("GachaManager: Card pool for rarity %s is empty!" % rarity)
+		return null
+
+	var random_index: int = randi() % selected_pool.size()
+	var base_card: PlayerCardData = selected_pool[random_index]
+	var unique_instance: PlayerCardData = base_card.duplicate(true) as PlayerCardData
+	unique_instance.id = _generate_uuid()
+	return unique_instance
+
 # ==========================================
 # INTERNAL LOGIC & RNG
 # ==========================================
-
 func _roll_rarity(save: SaveData) -> PlayerCardData.Rarity:
 	save.pity_epic_counter += 1
 	save.pity_legendary_counter += 1
 	save.pity_mythic_counter += 1
 
 	var final_rarity: PlayerCardData.Rarity = PlayerCardData.Rarity.COMMON
-
 	if save.pity_mythic_counter >= PITY_MYTHIC:
 		final_rarity = PlayerCardData.Rarity.MYTHIC
 	elif save.pity_legendary_counter >= PITY_LEGENDARY:
@@ -75,16 +100,15 @@ func _reset_pity_counters(save: SaveData, obtained_rarity: PlayerCardData.Rarity
 		PlayerCardData.Rarity.EPIC:
 			save.pity_epic_counter = 0
 
-func _generate_card_instance(rarity: PlayerCardData.Rarity) -> PlayerCardData:
-	var card: PlayerCardData = PlayerCardData.new()
-
-	card.id = _generate_uuid()
-	card.rarity = rarity
-	card.playstyle = randi() % PlayerCardData.Playstyle.size() as PlayerCardData.Playstyle
-	card.mentality = randi() % PlayerCardData.Mentality.size() as PlayerCardData.Mentality
-	card.player_name = "Player_" + card.id.substr(0, 5).to_upper()
-
-	return card
+func _get_pool_by_rarity(rarity: PlayerCardData.Rarity) -> Array[PlayerCardData]:
+	match rarity:
+		PlayerCardData.Rarity.COMMON: return pool_common
+		PlayerCardData.Rarity.UNCOMMON: return pool_uncommon
+		PlayerCardData.Rarity.RARE: return pool_rare
+		PlayerCardData.Rarity.EPIC: return pool_epic
+		PlayerCardData.Rarity.LEGENDARY: return pool_legendary
+		PlayerCardData.Rarity.MYTHIC: return pool_mythic
+		_: return []
 
 func _generate_uuid() -> String:
 	var chars: String = "abcdefghijklmnopqrstuvwxyz0123456789"
